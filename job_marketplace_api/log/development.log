@@ -1,0 +1,63 @@
+  [1m[35m (36.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='JobMarketplaceApi'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-06-09 15:56:18.183494', '2025-06-09 15:56:18.183507') RETURNING "key" /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+Migrating to CreateClients (20250609155359)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='JobMarketplaceApi'*/[0m
+  [1m[35m (12.2ms)[0m  [1m[35mCREATE TABLE "clients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250609155359') RETURNING "version" /*application='JobMarketplaceApi'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='JobMarketplaceApi'*/[0m
+Migrating to CreateOpportunities (20250609155455)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='JobMarketplaceApi'*/[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "opportunities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "description" text, "salary" decimal, "client_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_cb5a9cdfe0"
+FOREIGN KEY ("client_id")
+  REFERENCES "clients" ("id")
+) /*application='JobMarketplaceApi'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_opportunities_on_client_id" ON "opportunities" ("client_id") /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (18.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250609155455') RETURNING "version" /*application='JobMarketplaceApi'*/[0m
+  [1m[36mTRANSACTION (3.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='JobMarketplaceApi'*/[0m
+Migrating to CreateJobApplications (20250609155559)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='JobMarketplaceApi'*/[0m
+  [1m[35m (34.4ms)[0m  [1m[35mCREATE TABLE "job_applications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_seeker_name" varchar, "opportunity_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_6f4bbc06ce"
+FOREIGN KEY ("opportunity_id")
+  REFERENCES "opportunities" ("id")
+) /*application='JobMarketplaceApi'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_job_applications_on_opportunity_id" ON "job_applications" ("opportunity_id") /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250609155559') RETURNING "version" /*application='JobMarketplaceApi'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+Started GET "/" for 127.0.0.1 at 2025-06-09 12:15:30 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+  
+NoMethodError (undefined method 'posts' for an instance of ActionDispatch::Routing::Mapper):
+  
+config/routes.rb:12:in 'block (2 levels) in <main>'
+config/routes.rb:11:in 'block in <main>'
+config/routes.rb:1:in '<main>'
+Started GET "/favicon.ico" for 127.0.0.1 at 2025-06-09 12:15:55 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+Started GET "/clients" for 127.0.0.1 at 2025-06-09 21:33:32 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (3.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='JobMarketplaceApi'*/[0m
+  
+NoMethodError (undefined method 'posts' for an instance of ActionDispatch::Routing::Mapper):
+  
+config/routes.rb:12:in 'block (2 levels) in <main>'
+config/routes.rb:11:in 'block in <main>'
+config/routes.rb:1:in '<main>'
+Started GET "/" for 127.0.0.1 at 2025-06-09 21:33:43 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/"):
+  
+Started GET "/job_marketplace_api" for 127.0.0.1 at 2025-06-09 21:34:07 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/job_marketplace_api"):
+  
